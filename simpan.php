@@ -1,8 +1,15 @@
-
 <?php
+
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
 // Memeriksa pengiriman formulir
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: index.html");
+    header("Location: index.php");
     exit;
 }
 
@@ -103,6 +110,7 @@ function aman($data) {
 <footer>
     <p>&copy; 2026 SIM-Barang - Politeknik Negeri Sriwijaya</p>
 </footer>
+<a href="index.php">Kembali ke SIM-Barang</a>
 
 </body>
 </html>

@@ -1,3 +1,19 @@
+<?php
+session_start();
+
+// Melindungi halaman agar hanya bisa dibuka setelah login
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Memanggil class Barang
+require_once "Barang.php";
+
+// Membuat objek Barang
+$contohBarang = new Barang("Printer", 2, 1500000);
+?>
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -18,9 +34,19 @@
         <a href="#beranda">Beranda</a>
         <a href="#inventaris">Inventaris</a>
         <a href="#form">Tambah Barang</a>
+        <a href="logout.php">Logout</a>
     </nav>
 
     <main id="beranda">
+
+    <section>
+    <h2>Contoh Perhitungan OOP</h2>
+    <p>
+        Contoh perhitungan OOP:
+        <?= htmlspecialchars($contohBarang->nama) ?> =
+        Rp <?= number_format($contohBarang->hitungTotal(), 0, ',', '.') ?>
+    </p>
+</section>
 
         <section id="inventaris">
             <h2>Data Inventaris Barang</h2>
