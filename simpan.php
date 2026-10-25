@@ -1,5 +1,5 @@
-<?php
 
+<?php
 session_start();
 
 if (!isset($_SESSION["login"])) {
@@ -7,110 +7,53 @@ if (!isset($_SESSION["login"])) {
     exit;
 }
 
-// Memeriksa pengiriman formulir
+require_once "koneksi.php";
+require_once "Barang.php";
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: index.php");
     exit;
 }
 
-// Mengambil data dari formulir
-$kode = trim($_POST["kode"] ?? "");
-$nama = trim($_POST["nama"] ?? "");
-$kategori = trim($_POST["kategori"] ?? "");
-$jumlah = (int) ($_POST["jumlah"] ?? 0);
-$kondisi = trim($_POST["kondisi"] ?? "");
-$harga = (float) ($_POST["harga_satuan"] ?? 0);
+$kode = strtoupper(trim($_POST["kode"]));
+$nama = trim($_POST["nama"]);
+$kategori = (int) $_POST["kategori"];
+$jumlah = (int) $_POST["jumlah"];
+$kondisi = $_POST["kondisi"];
+$harga = (float) $_POST["harga_satuan"];
 
-// Fungsi menghitung total aset
-function hitungTotalAset($jumlah, $harga) {
-    return $jumlah * $harga;
+if (!preg_match('/^BRG-\d+$/', $kode) || $nama == "" || $kategori <= 0 || $jumlah <= 0 || $harga < 0) {
+    die("Data tidak valid!");
 }
 
-// Validasi data
-if (
-    !preg_match('/^BRG-\d+$/', $kode) ||
-    $nama === "" ||
-    $kategori === "" ||
-    $jumlah <= 0 ||
-    $kondisi === "" ||
-    $harga < 0
-) {
-    die("Data tidak valid. Silakan kembali dan periksa formulir.");
-}
+$barang = new Barang($nama, $jumlah, $harga);
+$total = $barang->hitungTotal();
 
-// Menghitung total aset
-$total = hitungTotalAset($jumlah, $harga);
+$sql = "INSERT INTO barang
+(kode_barang, nama_barang, id_kategori, jumlah, kondisi, harga_satuan)
+VALUES (?, ?, ?, ?, ?, ?)";
 
-// Mengamankan tampilan teks
-function aman($data) {
-    return htmlspecialchars($data, ENT_QUOTES, "UTF-8");
-}
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$kode, $nama, $kategori, $jumlah, $kondisi, $harga]);
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasil Input Barang - SIM-Barang</title>
+    <title>Barang Tersimpan</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<header>
-    <h1>SIM-Barang</h1>
-    <p>Hasil Pemrosesan Data Barang</p>
-</header>
-
-<main>
-    <section>
-        <h2>Ringkasan Barang Berhasil Diproses</h2>
-
-        <table>
-            <tr>
-                <th>Keterangan</th>
-                <th>Hasil</th>
-            </tr>
-            <tr>
-                <td>Kode Barang</td>
-                <td><?= aman($kode) ?></td>
-            </tr>
-            <tr>
-                <td>Nama Barang</td>
-                <td><?= aman($nama) ?></td>
-            </tr>
-            <tr>
-                <td>Kategori</td>
-                <td><?= aman($kategori) ?></td>
-            </tr>
-            <tr>
-                <td>Jumlah</td>
-                <td><?= $jumlah ?></td>
-            </tr>
-            <tr>
-                <td>Kondisi</td>
-                <td><?= aman($kondisi) ?></td>
-            </tr>
-            <tr>
-                <td>Harga Satuan</td>
-                <td>Rp <?= number_format($harga, 0, ',', '.') ?></td>
-            </tr>
-            <tr>
-                <th>Total Estimasi Aset</th>
-                <th>Rp <?= number_format($total, 0, ',', '.') ?></th>
-            </tr>
-        </table>
-
-        <p>Data barang berhasil diproses oleh PHP.</p>
-
-        <a href="index.html">Kembali ke SIM-Barang</a>
-    </section>
-</main>
-
-<footer>
-    <p>&copy; 2026 SIM-Barang - Politeknik Negeri Sriwijaya</p>
-</footer>
-<a href="index.php">Kembali ke SIM-Barang</a>
-
+    <main>
+        <section>
+            <h2>Barang Berhasil Disimpan!</h2>
+            <p>Kode Barang: <?= htmlspecialchars($kode) ?></p>
+            <p>Nama Barang: <?= htmlspecialchars($nama) ?></p>
+            <p>Jumlah: <?= $jumlah ?></p>
+            <p>Total Aset: Rp <?= number_format($total, 0, ',', '.') ?></p>
+            <a href="index.php">Kembali ke SIM-Barang</a>
+        </section>
+    </main>
 </body>
 </html>
