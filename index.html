@@ -24,8 +24,10 @@
 
         <section id="inventaris">
             <h2>Data Inventaris Barang</h2>
+            <input type="text" id="cari" placeholder="Cari nama atau kode barang...">
 
-            <table border="1">
+        <table>
+            <thead>
                 <tr>
                     <th>Kode</th>
                     <th>Nama Barang</th>
@@ -33,6 +35,9 @@
                     <th>Jumlah</th>
                     <th>Kondisi</th>
                 </tr>
+            </thead>
+
+            <tbody id="daftarBarang">
                 <tr>
                     <td>BRG-001</td>
                     <td>Komputer</td>
@@ -47,50 +52,43 @@
                     <td>15</td>
                     <td>Baik</td>
                 </tr>
-            </table>
+            </tbody>
+</table>
         </section>
 
         <section id="form">
             <h2>Form Input Barang</h2>
 
-            <form>
-                <label>Kode Barang:</label>
-                <input type="text" placeholder="BRG-003" required>
+            <form id="barangForm">
+    <label for="kode">Kode Barang</label>
+    <input type="text" id="kode" placeholder="BRG-003" required>
 
-                <br><br>
+    <label for="nama">Nama Barang</label>
+    <input type="text" id="nama" placeholder="Nama barang" required>
 
-                <label>Nama Barang:</label>
-                <input type="text" placeholder="Nama barang" required>
+    <label for="kategori">Kategori</label>
+    <select id="kategori" required>
+        <option value="">Pilih Kategori</option>
+        <option>Elektronik</option>
+        <option>Furniture</option>
+        <option>Peralatan</option>
+    </select>
 
-                <br><br>
+    <label for="jumlah">Jumlah</label>
+    <input type="number" id="jumlah" placeholder="Jumlah barang" required>
 
-                <label>Kategori:</label>
-                <select required>
-                    <option value="">Pilih Kategori</option>
-                    <option>Elektronik</option>
-                    <option>Furniture</option>
-                    <option>Peralatan</option>
-                </select>
+    <label for="kondisi">Kondisi</label>
+    <select id="kondisi" required>
+        <option value="">Pilih Kondisi</option>
+        <option>Baik</option>
+        <option>Rusak Ringan</option>
+        <option>Rusak Berat</option>
+    </select>
 
-                <br><br>
+    <button type="submit">Simpan</button>
+</form>
 
-                <label>Jumlah:</label>
-                <input type="number" placeholder="Jumlah barang" required>
-
-                <br><br>
-
-                <label>Kondisi:</label>
-                <select required>
-                    <option value="">Pilih Kondisi</option>
-                    <option>Baik</option>
-                    <option>Rusak Ringan</option>
-                    <option>Rusak Berat</option>
-                </select>
-
-                <br><br>
-
-                <button type="submit">Simpan</button>
-            </form>
+<div id="toast"></div>
         </section>
 
     </main>
@@ -98,6 +96,8 @@
     <footer>
         <p>&copy; 2026 SIM-Barang - Politeknik Negeri Sriwijaya</p>
     </footer>
+
+    <script src="main.js" defer></script>
 
 </body>
 </html>
