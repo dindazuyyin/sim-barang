@@ -6,7 +6,6 @@ SIM-Barang merupakan aplikasi berbasis web yang dirancang untuk membantu pengelo
 
 ### Tujuan
 - Mengelola data inventaris barang.
-- Mencatat barang masuk dan barang keluar.
 - Memantau jumlah dan kondisi barang.
 - Mempermudah pencarian informasi inventaris.
 

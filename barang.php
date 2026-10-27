@@ -1,4 +1,3 @@
-
 <?php
 class Barang {
     public $nama;

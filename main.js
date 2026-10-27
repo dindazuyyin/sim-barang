@@ -1,38 +1,53 @@
-
 "use strict";
 
-// Pencarian barang
-const cari = document.getElementById("cari");
+// Fungsi menampilkan notifikasi
+function tampilkanPesan(pesan, warna) {
+    const toast = document.getElementById("toast");
 
-if (cari) {
-    cari.addEventListener("input", function () {
-        const kata = cari.value.toLowerCase();
+    if (!toast) return;
 
-        document.querySelectorAll("#daftarBarang tr").forEach(row => {
-            row.style.display = row.textContent.toLowerCase().includes(kata)
-                ? ""
-                : "none";
-        });
-    });
+    toast.textContent = pesan;
+    toast.style.background = warna;
+    toast.style.display = "block";
+
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 3000);
 }
 
-// Validasi sebelum formulir dikirim ke PHP
+// Validasi formulir
 const form = document.getElementById("barangForm");
 
 if (form) {
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", function(event) {
         const kode = document.getElementById("kode").value.trim();
         const jumlah = Number(document.getElementById("jumlah").value);
 
         if (!/^BRG-\d+$/.test(kode)) {
             event.preventDefault();
-            alert("Kode barang harus berformat BRG-001!");
-            return;
-        }
-
-        if (jumlah <= 0 || !Number.isFinite(jumlah)) {
+            tampilkanPesan("Kode harus berformat BRG-001!", "#dc2626");
+        } else if (jumlah <= 0 || !Number.isFinite(jumlah)) {
             event.preventDefault();
-            alert("Jumlah barang harus lebih dari 0!");
+            tampilkanPesan("Jumlah harus lebih dari 0!", "#dc2626");
         }
+    });
+}
+
+// Pencarian barang secara real-time
+const cari = document.getElementById("cari");
+const tabel = document.getElementById("daftarBarang");
+
+if (cari && tabel) {
+    cari.addEventListener("input", function() {
+        const kata = cari.value.toLowerCase();
+        const baris = tabel.querySelectorAll("tr");
+
+        baris.forEach((tr, index) => {
+            if (index === 0) return;
+
+            tr.style.display = tr.textContent.toLowerCase().includes(kata)
+                ? ""
+                : "none";
+        });
     });
 }

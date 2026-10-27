@@ -1,4 +1,3 @@
-
 <?php
 $host = "localhost";
 $dbname = "sim-barang";
@@ -18,7 +17,3 @@ try {
 } catch (PDOException $e) {
     die("Koneksi database gagal: " . $e->getMessage());
 }
-?>
-<?php
-echo "Koneksi database berhasil!";
-?>

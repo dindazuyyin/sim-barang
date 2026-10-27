@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIM-Barang</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>SIM-Bang</h1>
+        <p>Sistem Inventaris Barang Jurusan</p>
+    </header>
+
+    <nav>
+        <a href="#beranda">Beranda</a>
+        <a href="#inventaris">Inventaris</a>
+        <a href="#form">Tambah Barang</a>
+    </nav>
+
+    <main id="beranda">
+
+        <section id="inventaris">
+            <h2>Data Inventaris Barang</h2>
+
+            <table border="1">
+                <tr>
+                    <th>Kode</th>
+                    <th>Nama Barang</th>
+                    <th>Kategori</th>
+                    <th>Jumlah</th>
+                    <th>Kondisi</th>
+                </tr>
+                <tr>
+                    <td>BRG-001</td>
+                    <td>Komputer</td>
+                    <td>Elektronik</td>
+                    <td>10</td>
+                    <td>Baik</td>
+                </tr>
+                <tr>
+                    <td>BRG-002</td>
+                    <td>Meja</td>
+                    <td>Furniture</td>
+                    <td>15</td>
+                    <td>Baik</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="form">
+            <h2>Form Input Barang</h2>
+
+            <form>
+                <label>Kode Barang:</label>
+                <input type="text" placeholder="BRG-003" required>
+
+                <br><br>
+
+                <label>Nama Barang:</label>
+                <input type="text" placeholder="Nama barang" required>
+
+                <br><br>
+
+                <label>Kategori:</label>
+                <select required>
+                    <option value="">Pilih Kategori</option>
+                    <option>Elektronik</option>
+                    <option>Furniture</option>
+                    <option>Peralatan</option>
+                </select>
+
+                <br><br>
+
+                <label>Jumlah:</label>
+                <input type="number" placeholder="Jumlah barang" required>
+
+                <br><br>
+
+                <label>Kondisi:</label>
+                <select required>
+                    <option value="">Pilih Kondisi</option>
+                    <option>Baik</option>
+                    <option>Rusak Ringan</option>
+                    <option>Rusak Berat</option>
+                </select>
+
+                <br><br>
+
+                <button type="submit">Simpan</button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SIM-Barang - Politeknik Negeri Sriwijaya</p>
+    </footer>
+
+</body> //menutup isi website
+</html> //menutup seluruh dokumen html
